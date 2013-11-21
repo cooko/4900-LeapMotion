@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="mhn2oD" name="Leapdev" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.Leapdev" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0">
+  <MAINGROUP id="Ad8Kuu" name="Leapdev">
+    <GROUP id="{E530C940-0832-F961-960C-A31BFF78B128}" name="Source">
+      <FILE id="r3wOeA" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2010 targetFolder="Builds/VisualStudio2010">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="Leapdev"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="Leapdev"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_video" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE-master/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE-master/modules"/>
+      </MODULEPATHS>
+    </VS2010>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>

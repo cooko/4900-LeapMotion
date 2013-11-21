@@ -7,6 +7,7 @@
 \******************************************************************************/
 
 #include <iostream>
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "Leap.h"
 using namespace Leap;
 
@@ -18,14 +19,14 @@ int track = 0;
 int trackCount = 0;
 
 class SampleListener : public Listener {
-public:
-	virtual void onInit(const Controller&);
-	virtual void onConnect(const Controller&);
-	virtual void onDisconnect(const Controller&);
-	virtual void onExit(const Controller&);
-	virtual void onFrame(const Controller&);
-	virtual void onFocusGained(const Controller&);
-	virtual void onFocusLost(const Controller&);
+	public:
+		virtual void onInit(const Controller&);
+		virtual void onConnect(const Controller&);
+		virtual void onDisconnect(const Controller&);
+		virtual void onExit(const Controller&);
+		virtual void onFrame(const Controller&);
+		virtual void onFocusGained(const Controller&);
+		virtual void onFocusLost(const Controller&);
 };
 
 void SampleListener::onInit(const Controller& controller) {
@@ -52,9 +53,13 @@ void SampleListener::onExit(const Controller& controller) {
 void SampleListener::onFrame(const Controller& controller) {
 	// Get the most recent frame and report some basic information
 	const Frame frame = controller.frame();
+	std::cout << frame.hands()[0].palmPosition() << "\n";
 	if (frame.hands().count() != handCount){
 		handCount = frame.hands().count();
 		std::cout << frame.hands().count() << " Hands\n";
+		if(!frame.hands().isEmpty()){
+			std::cout << frame.hands()[0].id() << "\n";
+		}
 	}
 	if (frame.fingers().count() != fingerCount){
 		fingerCount = frame.fingers().count();
@@ -68,6 +73,9 @@ void SampleListener::onFrame(const Controller& controller) {
 		if (trackCount == 10){
 			gold = track;
 			std::cout << frame.fingers().count() << " Fingers\n";
+			for(int i = 0;i<frame.fingers().count();i++){
+				std::cout << "	Finger " << i << " ID: " << frame.fingers()[i] << "\n";
+			}
 		}
 	}
 }
