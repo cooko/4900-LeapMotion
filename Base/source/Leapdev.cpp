@@ -52,32 +52,6 @@ void SampleListener::onExit(const Controller& controller) {
 
 void SampleListener::onFrame(const Controller& controller) {
 	// Get the most recent frame and report some basic information
-	const Frame frame = controller.frame();
-	std::cout << frame.hands()[0].palmPosition() << "\n";
-	if (frame.hands().count() != handCount){
-		handCount = frame.hands().count();
-		std::cout << frame.hands().count() << " Hands\n";
-		if(!frame.hands().isEmpty()){
-			std::cout << frame.hands()[0].id() << "\n";
-		}
-	}
-	if (frame.fingers().count() != fingerCount){
-		fingerCount = frame.fingers().count();
-	}
-	if (frame.fingers().count() != track){
-		track = frame.fingers().count();
-		trackCount = 1;
-	}
-	else{
-		trackCount++;
-		if (trackCount == 10){
-			gold = track;
-			std::cout << frame.fingers().count() << " Fingers\n";
-			for(int i = 0;i<frame.fingers().count();i++){
-				std::cout << "	Finger " << i << " ID: " << frame.fingers()[i] << "\n";
-			}
-		}
-	}
 }
 
 void SampleListener::onFocusGained(const Controller& controller) {
@@ -88,7 +62,74 @@ void SampleListener::onFocusLost(const Controller& controller) {
 	std::cout << "Focus Lost" << std::endl;
 }
 
-int main() {
+class LeapdevWindow : public DocumentWindow {
+public:
+    LeapdevWindow()
+        : DocumentWindow ("JUCE Hello World!",
+                          Colours::lightgrey,
+                          DocumentWindow::allButtons,
+                          true)
+    {
+    	//setContentOwned (new MainComponent(), true);
+		//centerWithSize (getWidth(), getHeight());
+		setVisible (true);
+	}
+
+	~LeapdevWindow()
+    {
+        // (the content component will be deleted automatically, so no need to do it here)
+    }
+	void closeButtonPressed()
+    {
+        // When the user presses the close button, we'll tell the app to quit. This
+        // HelloWorldWindow object will be deleted by the JUCEHelloWorldApplication class.
+        JUCEApplication::quit();
+    }
+};
+
+class LeapdevApplication : public JUCEApplication{
+public:
+	LeapdevApplication(){
+
+	}
+	void initialise (const String& commandLine){
+		mainWindow = new LeapdevWindow();
+	}
+    void shutdown()
+    {
+        // This method is where you should clear-up your app's resources..
+
+        // The helloWorldWindow variable is a ScopedPointer, so setting it to a null
+        // pointer will delete the window.
+        mainWindow = nullptr;
+    }
+    const String getApplicationName()
+    {
+        return "Leapdev now with GUI!";
+    }
+    const String getApplicationVersion()
+    {
+        // The ProjectInfo::versionString value is automatically updated by the Jucer, and
+        // can be found in the JuceHeader.h file that it generates for our project.
+        return ProjectInfo::versionString;
+    }
+
+    bool moreThanOneInstanceAllowed()
+    {
+        return true;
+    }
+
+    void anotherInstanceStarted (const String& commandLine)
+    {
+    }
+
+private:
+    ScopedPointer<LeapdevWindow> mainWindow;
+};
+
+START_JUCE_APPLICATION (LeapdevApplication)
+
+/*int main() {
 	// Create a sample listener and controller
 	SampleListener listener;
 	Controller controller;
@@ -105,3 +146,4 @@ int main() {
 
 	return 0;
 }
+*/

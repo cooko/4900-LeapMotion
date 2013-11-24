@@ -1,10 +1,11 @@
-Leapdev.cpp
+presentation.cpp
 Microsoft (R) Incremental Linker Version 12.00.21005.1
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
-/out:Leapdev.exe 
+/out:presentation.exe 
 /debug 
 .\lib\debug\Leapd.lib 
-/OUT:.\build\debug\Leapdev.exe 
+user32.lib 
+/OUT:.\build\debug\presentation.exe 
 /DEBUG 
-Leapdev.obj 
+presentation.obj 
