@@ -49,11 +49,22 @@ var LeapManager = {
   startCapture: function () {
     console.log("Start Capture");
     LeapManager.capture = 1;
-    setTimeout(this.stopCapture,3000);
+    timer = setInterval(LeapManager.countCapture,1000);
+  },
+  countCapture: function () {
+    if(tcount < 0){
+      LeapManager.stopCapture();
+    }else{
+      document.getElementById("Timer").innerHTML=tcount--;
+    }
   },
   stopCapture: function () {
     console.log("Stop Capture");
     console.log("Difference: " + LeapManager.dif);
+
+    clearInterval(timer);
+    tcount = 10;
+
     LeapManager.capture = 0;
     LeapManager.min = 0;
     LeapManager.max = 0;

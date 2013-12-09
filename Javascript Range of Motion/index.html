@@ -11,14 +11,22 @@
     <script src="src/LeapManager.js"></script>
     <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
     <script>
-    function track(){
-        console.log("press");
-    }
+        var timer;
+        var tcount = 10;
+        function myTimer() {
+            document.getElementById("Timer").innerHTML=tcount--;
+            console.log("bam");
+        }
+        function myStopFunction() {
+            clearInterval(timer);
+            tcount = 10;
+        }
     </script>
 </head>
 <body>
     <h1>Yep</h1>
     <button onclick="LeapManager.startCapture()">Copy Text</button>
+    <div id="Timer"></div>
     <canvas id="canvas" width="640" height="480" style="position:absolute; left:200px; top:200px;">Failure</canvas>
 </body>
 </html>
