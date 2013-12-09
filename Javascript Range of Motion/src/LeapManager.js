@@ -5,6 +5,7 @@ var LeapManager = {
   capture: 0,
   min: 0,
   max: 0,
+  dif: 0,
 
   init: function () {
     controller = new Leap.Controller();
@@ -22,7 +23,23 @@ var LeapManager = {
     });
     controller.on( 'frame' , function(frame){
       if(LeapManager.capture){
-        console.log("Frame: " + frame.id);
+        if(frame.hands.length > 0){
+          if(frame.hands[0].fingers.length > 0){
+            if(LeapManager.min == 0){
+              LeapManager.min = frame.hands[0].fingers[0].tipPosition[1];
+              LeapManager.max = frame.hands[0].fingers[0].tipPosition[1];
+            }
+            if(LeapManager.min > frame.hands[0].fingers[0].tipPosition[1]){
+              LeapManager.min = frame.hands[0].fingers[0].tipPosition[1];
+            }
+            if(LeapManager.max < frame.hands[0].fingers[0].tipPosition[1]){
+              LeapManager.max = frame.hands[0].fingers[0].tipPosition[1];
+            }
+            LeapManager.dif = LeapManager.max - LeapManager.min;
+            //console.log("HandMovement: " + frame.hands[0].translation(frame.id-2));
+            //console.log("Dif: " + LeapManager.dif + " Min: " +  LeapManager.min + " Max: "  + LeapManager.max);
+          }
+        }
       }
       aframe = frame;
     });
@@ -35,8 +52,12 @@ var LeapManager = {
     setTimeout(this.stopCapture,3000);
   },
   stopCapture: function () {
-    LeapManager.capture = 0;
     console.log("Stop Capture");
+    console.log("Difference: " + LeapManager.dif);
+    LeapManager.capture = 0;
+    LeapManager.min = 0;
+    LeapManager.max = 0;
+    LeapManager.dif = 0;
   },
 }
 
