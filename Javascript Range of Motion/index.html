@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Frameworks go here -->
+    <script src="lib/jquery.min.js"></script>
+
+    <!-- Source files -->
+    <script src="src/main.js"></script>
+    <script src="src/WindowManager.js"></script>
+    <script src="src/InputManager.js"></script>
+    <script src="src/LeapManager.js"></script>
+    <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+    <script>
+    function track(){
+        console.log("press");
+    }
+    </script>
+</head>
+<body>
+    <h1>Yep</h1>
+    <button onclick="LeapManager.startCapture()">Copy Text</button>
+    <canvas id="canvas" width="640" height="480" style="position:absolute; left:200px; top:200px;">Failure</canvas>
+</body>
+</html>
