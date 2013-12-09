@@ -1,0 +1,15 @@
+presentation
+
+Active range-of-motion calculations using the leap motion controller
+
+http://mikeriv.com/projectpaalm/Rivera_Michael-Project_Paalm.pdf
+http://www.youtube.com/watch?v=JrKltv6TObw&feature=c4-overview-vl&list=PLWH3n6iHMaTfQrR8viuZ55QkedXpPH_K9
+http://www.cescg.org/CESCG-2002/LBarinka/paper.pdf
+
+some issues:
+
+	finger range of motion is measured in angles of the different parts of the finger
+		the leap motion only provides information about the finger tip
+		Some sort of inverse kinimatics might be required to solve this7
+
+	full skeleton recognition is planned for future updates

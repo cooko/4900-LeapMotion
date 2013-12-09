@@ -1,4 +1,7 @@
 var LeapManager = {
+
+  results:undefined,
+
   controller: undefined,
   aframe: undefined,
   frameCount: 0,
@@ -8,20 +11,20 @@ var LeapManager = {
   dif: 0,
 
   init: function () {
-    controller = new Leap.Controller();
-
-    controller.on('connect', function() {
+    LeapManager.controller = new Leap.Controller();
+    LeapManager.results = new Array();
+    LeapManager.controller.on('connect', function() {
       console.log("Successfully connected.");
     });
 
-    controller.on('deviceConnected', function() {
+    LeapManager.controller.on('deviceConnected', function() {
       console.log("A Leap device has been connected.");
     });
 
-    controller.on('deviceDisconnected', function() {
+    LeapManager.controller.on('deviceDisconnected', function() {
       console.log("A Leap device has been disconnected.");
     });
-    controller.on( 'frame' , function(frame){
+    LeapManager.controller.on( 'frame' , function(frame){
       if(LeapManager.capture){
         if(frame.hands.length > 0){
           if(frame.hands[0].fingers.length > 0){
@@ -44,7 +47,7 @@ var LeapManager = {
       aframe = frame;
     });
 
-      controller.connect();
+      LeapManager.controller.connect();
   },
   startCapture: function () {
     console.log("Start Capture");
@@ -65,10 +68,13 @@ var LeapManager = {
     clearInterval(timer);
     tcount = 10;
 
+    LeapManager.results[LeapManager.results.length] = LeapManager.dif;
+
     LeapManager.capture = 0;
     LeapManager.min = 0;
     LeapManager.max = 0;
     LeapManager.dif = 0;
+    console.log(LeapManager.results);
   },
 }
 
