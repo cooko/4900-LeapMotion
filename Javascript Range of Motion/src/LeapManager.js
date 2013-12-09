@@ -6,9 +6,13 @@ var LeapManager = {
   aframe: undefined,
   frameCount: 0,
   capture: 0,
+  calibrate: 0,
   min: 0,
   max: 0,
   dif: 0,
+  basePlane: 0,
+  fingerJoint: 0,
+  stable: 0,
 
   init: function () {
     LeapManager.controller = new Leap.Controller();
@@ -44,6 +48,22 @@ var LeapManager = {
           }
         }
       }
+
+      if(LeapManager.calibrate){
+        if(aframe.hands.length > 0){
+          if(aframe.hands[0].fingers.length > 0){
+            var difference = aframe.hands[0].palmPosition[1] - aframe.hands[0].fingers[0].tipPosition[1];
+            if(difference > -5 && difference < 5){
+              basePlane = aframe.hands[0].fingers[0].tipPosition[1];
+              fingerJoint = aframe.hands[0].fingers[0].tipPosition[1] - aframe.hands[0].fingers[0].length;
+              console.log("stable");
+              LeapManager.stopCalibration();
+              LeapManager.startCapture();
+            }
+          }
+        }
+      }
+
       aframe = frame;
     });
 
@@ -75,6 +95,29 @@ var LeapManager = {
     LeapManager.max = 0;
     LeapManager.dif = 0;
     console.log(LeapManager.results);
+  },
+
+  startCalibration: function(){
+    console.log("Start Calibration");
+
+    LeapManager.calibrate = 1;
+    timer = setInterval(LeapManager.countCalibration,1000);
+  },
+  countCalibration: function () {
+    if(tcount < 0){
+      LeapManager.stopCalibration();
+    }else{
+      document.getElementById("Timer").innerHTML=tcount--;
+    }
+  },
+  stopCalibration: function(){
+    console.log("Stop Calibration");
+    clearInterval(timer);
+    tcount = 10;
+    LeapManager.calibrate = 0;
+  },
+
+  setZeroPlane: function() {
   },
 }
 
