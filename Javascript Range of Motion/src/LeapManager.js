@@ -2,11 +2,14 @@ var LeapManager = {
 
   controller: undefined,
 
-  curMax: 0,
+  curMax: undefined,
+
 
   init: function () {
     LeapManager.controller = new Leap.Controller();
-    LeapManager.results = new Array();
+    
+    LeapManager.curMax = new Array();
+
     LeapManager.controller.on('connect', function() {
       console.log("Successfully connected.");
     });
@@ -20,7 +23,13 @@ var LeapManager = {
     });
 
     LeapManager.controller.on( 'frame' , function(frame){
-      if(frame.hands.length > 0){
+      for(var i = 0; i < frame.hands.length; i++){
+        for(var j = 0; i < frame.hands[i].fingers.length; j++){
+          var angle = LeapManager.getAngle(frame, i, j);
+          LeapManager.curMax[i][j] = angle;
+        }
+      }
+      /*if(frame.hands.length > 0){
         if(frame.hands[0].fingers.length > 0){
           var angle = LeapManager.getAngle(frame);
           if(angle > LeapManager.curMax){
@@ -28,14 +37,14 @@ var LeapManager = {
           }
         }
         console.log(LeapManager.curMax);
-      }
+      }*/
     });
 
     LeapManager.controller.connect();
   },
-  getAngle: function(frame){
-    var x = frame.hands[0].fingers[0].tipPosition[2] - frame.hands[0].palmPosition[2];
-    var y = frame.hands[0].fingers[0].tipPosition[1] - frame.hands[0].palmPosition[1];
+  getAngle: function(frame, hand, finger){
+    var x = frame.hands[hand].fingers[finger].tipPosition[2] - frame.hands[hand].palmPosition[2];
+    var y = frame.hands[hand].fingers[finger].tipPosition[1] - frame.hands[hand].palmPosition[1];
     var angle = Math.atan2(y,x);
     if(angle > 0){
       angle = 180 - angle*(180/Math.PI)
