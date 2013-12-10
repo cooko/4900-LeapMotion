@@ -137,7 +137,11 @@
           c.closePath();
           c.stroke();
 
-          var angle = Math.atan2(y,x)*(180/Math.PI);
+          var angle = Math.atan2(y,x);
+          if(angle > 0){
+          }else{
+            angle = 180 + angle*(180/Math.PI)      
+          }
 
           c.beginPath();
           c.strokeStyle = "#FFA040";

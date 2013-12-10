@@ -1,0 +1,67 @@
+API Results
+	Leap Motion comes with access to the developer kit
+		collection of libraries and sample programs to use in development
+	Complete API is avaiable online through their site
+		outlines the basics archatecture and specific functions of the the leap motion
+	Bindings existed many languages
+	Unexpected learning overhead
+		windows development
+		languages
+		gui issues
+
+Sample Applications
+	Developed 6 sample/demonstration applications
+	Used to learn the major parts of the leap motion
+		Gesture control
+		Finger tracking
+		3d space navigation
+		2d space navigation
+
+Usage Research
+	Explored some potential future uses
+	Focused on specific catagories
+		Education
+		OS control
+		Video games
+		Rehabilitation
+
+	Overview of results
+		A lot of work is being done
+		active community of developers
+		wide range of applications
+		mostly in the rudementury/experimental stages
+		mostly seems like proofs of concepts more than complete applications
+		people doing the same thing as me
+
+
+Rehab software
+	Focus of project
+	design an application that can assist in range of motion rehabilitation
+		Quantitativly track improvements over time.
+	took some research
+		what is range of motion
+		how is it calculated
+		is it possible to emulate
+
+	Overview
+		Active range-of-motion calculation using the leap motion controller
+		unassisted diagnostic
+		angle that your finger travels relative to the joint
+		Performed with a goniometer
+			used to measure the angle that your finger moves
+
+	Implementation
+		replicate a goniometer
+		tracks using inverse trigonomics the angle of movement
+			from palm position to tip of finger
+		records these for access later
+
+	Challenges
+		Joint tracking
+			fingers are broken into sections
+			Leap motion only tracks the finger as a whole
+				end point and palm location only
+		Occlusion
+			the leapmotion is unable to detect the finger during its complete movement
+		Stabilization
+			passive movement in the hand
