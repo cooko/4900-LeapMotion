@@ -1,0 +1,161 @@
+<html>
+<head>
+  <style>
+  
+    #canvas{
+      width:  100%;
+      height: 100%;
+    }
+    
+  </style>
+  
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+<script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+
+  <script>
+  
+  // Get the canvas DOM element 
+    var canvas = document.getElementById('canvas');
+
+   
+    // Making sure we have the proper aspect ratio for our canvas
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    // Create the context we will use for drawing
+    var c =  canvas.getContext('2d');
+
+    // Save the canvas width and canvas height
+    // as easily accesible variables
+    var width = canvas.width;
+    var height = canvas.height;
+
+
+    /*
+      
+      The leapToScene function takes a position in leap space 
+      and converts it to the space in the canvas.
+
+      It does this by using the interaction box, in order to 
+      make sure that every part of the canvas is accesible 
+      in the interaction area of the leap
+
+    */
+    function leapToScene( frame , leapPos ){
+
+      // Gets the interaction box of the current frame
+      var iBox = frame.interactionBox;
+
+      // Gets the left border and top border of the box
+      // In order to convert the position to the proper
+      // location for the canvas
+      var left = iBox.center[0] - iBox.size[0]/2;
+      var top = iBox.center[1] + iBox.size[1]/2;
+
+      // Takes our leap coordinates, and changes them so
+      // that the origin is in the top left corner 
+      var x = leapPos[0] - left;
+      var y = leapPos[1] - top;
+
+      // Divides the position by the size of the box
+      // so that x and y values will range from 0 to 1
+      // as they lay within the interaction box
+      x /= iBox.size[0];
+      y /= iBox.size[1];
+
+      // Uses the height and width of the canvas to scale
+      // the x and y coordinates in a way that they 
+      // take up the entire canvas
+      x *= width;
+      y *= height;
+
+      // Returns the values, making sure to negate the sign 
+      // of the y coordinate, because the y basis in canvas 
+      // points down instead of up
+      return [ x , -y ];
+
+    }
+  
+    // Creates our Leap Controller
+    var controller = new Leap.Controller();
+
+    var x = 0.5;
+    var y = 1;
+    c.fillText(Math.atan2(x,y)*180/Math.PI,20,20);
+    c.arc(40, 40, 20, 0, Math.atan2(x,y));
+    c.stroke();
+
+    // Tells the controller what to do every time it sees a frame
+    controller.on( 'frame' , function(frame){
+      c.clearRect( 0 , 0 , width , height );
+      c.strokeStyle = "#000000";
+      c.lineWidth = 1;
+
+      if(frame.hands.length > 0){
+        c.beginPath();
+        c.arc(width/2,height/2, 20, 0, Math.PI*2);
+        c.closePath();
+        c.fill();
+
+        c.beginPath();
+        c.moveTo(0,height/2);
+        c.lineTo(width,height/2);
+        c.closePath();
+        c.stroke();
+
+        c.beginPath();
+        c.moveTo(width/2,0);
+        c.lineTo(width/2,height);
+        c.closePath();
+        c.stroke();
+
+        if(frame.hands[0].fingers.length > 0){
+          //var fingerPos = leapToScene( frame , frame.hands[0].fingers[0].tipPosition);
+          var x = frame.hands[0].fingers[0].tipPosition[2] - frame.hands[0].palmPosition[2];
+          var y = frame.hands[0].fingers[0].tipPosition[1] - frame.hands[0].palmPosition[1];
+
+          console.log(x + "," + y);
+
+          c.beginPath();
+          c.arc((width/2)+x*-1, (height/2)+y*-1, 10, 0, Math.PI*2);
+          c.closePath();
+          c.fill();
+
+          c.beginPath();
+          c.moveTo(width/2,height/2);
+          c.lineTo((width/2)+x*-1,(height/2)+y*-1);
+          c.closePath();
+          c.stroke();
+
+          c.beginPath();
+          c.moveTo((width/2)+x*-1,(height/2)+y*-1);
+          c.lineTo((width/2)+x*-1,height/2);
+          c.closePath();
+          c.stroke();
+
+          var angle = Math.atan2(y,x)*(180/Math.PI);
+
+          c.beginPath();
+          c.strokeStyle = "#FFA040";
+          c.lineWidth = 5;
+
+          c.arc(width/2, height/2, 20, 0, Math.atan2(x,y));
+          c.stroke();
+
+          c.fillText(angle,width/2+30,height/2+30);
+
+        }
+      }
+    });
+
+    // Get frames rolling by connecting the controller
+    controller.connect();
+    
+  </script>
+    
+</body>
+</html>

@@ -29,6 +29,21 @@ var LeapManager = {
       console.log("A Leap device has been disconnected.");
     });
     LeapManager.controller.on( 'frame' , function(frame){
+
+
+        if(frame.hands.length > 0){
+          if(frame.hands[0].fingers.length > 0){
+            var deltax = frame.hands[0].fingers[0].tipPosition[0] - frame.hands[0].palmPosition[0];
+            var deltay = frame.hands[0].fingers[0].tipPosition[1] - frame.hands[0].palmPosition[1];
+            console.log("palm " + frame.hands[0].palmPosition[0] + "," + frame.hands[0].palmPosition[1] +
+                        " | finger " + frame.hands[0].fingers[0].tipPosition[0] + "," + frame.hands[0].fingers[0].tipPosition[1]);
+            console.log("x,y | " + deltax + "," +deltay);
+            console.log(Math.atan2(20,20)*(180/3.1415));
+          }
+        }
+      
+
+
       if(LeapManager.capture){
         if(frame.hands.length > 0){
           if(frame.hands[0].fingers.length > 0){
