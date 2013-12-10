@@ -1,11 +1,11 @@
-presentation.cpp
+scrolling.cpp
 Microsoft (R) Incremental Linker Version 12.00.21005.1
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
-/out:presentation.exe 
+/out:scrolling.exe 
 /debug 
 .\lib\debug\Leapd.lib 
 user32.lib 
 /OUT:.\build\debug\presentation.exe 
 /DEBUG 
-presentation.obj 
+scrolling.obj 

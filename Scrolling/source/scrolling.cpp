@@ -13,21 +13,30 @@ using namespace Leap;
 
 Frame lastFrame;
 
-void hitKey(unsigned long character){
-	INPUT ip;
-	ip.type = INPUT_KEYBOARD;
-	ip.ki.wScan = 0; // hardware scan code for key
-	ip.ki.time = 0;
-	ip.ki.dwExtraInfo = 0;
+void scrollUp(){
+INPUT in;
+in.type = INPUT_MOUSE;
+in.mi.dx = 0;
+in.mi.dy = 0;
+in.mi.dwFlags = MOUSEEVENTF_WHEEL;
+in.mi.time = 0;
+in.mi.dwExtraInfo = 0;
+in.mi.mouseData = WHEEL_DELTA;
+SendInput(1,&in,sizeof(in));
 
-	// Press the "..." key
-	ip.ki.wVk = character; // virtual-key code for the "a" key
-	ip.ki.dwFlags = 0; // 0 for key press
-	SendInput(1, &ip, sizeof(INPUT));
+}
 
-	// Release the "..." key
-	ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
-	SendInput(1, &ip, sizeof(INPUT));
+void scrollDown(){
+INPUT in;
+in.type = INPUT_MOUSE;
+in.mi.dx = 0;
+in.mi.dy = 0;
+in.mi.dwFlags = MOUSEEVENTF_WHEEL;
+in.mi.time = 0;
+in.mi.dwExtraInfo = 0;
+in.mi.mouseData = WHEEL_DELTA*-1;
+SendInput(1,&in,sizeof(in));
+
 }
 
 class GestureListener : public Listener {
@@ -37,23 +46,16 @@ public:
   }
   virtual void onFrame(const Controller& controller) {
   	const Frame frame = controller.frame();
-  	const GestureList gestures = frame.gestures();
-
-  	//std::cout << frame.hands().count();
-  	//if(gestures.count() > 0 & frame.hands().count() >= 2){
-  	
-  	if(gestures.count() > 0){
-	    if(gestures[0].state() == 1){
-	    	if(controller.frame(1).gestures().count() <= 0){
-		    	SwipeGesture swipe = gestures[0];
-		        std::cout << "Swipe id: " << swipe.id()
-		       	  << ", " << swipe.frame()
-		          << ", state: " << swipe.state()
-		          << ", direction: " << swipe.direction()
-		          << ", speed: " << swipe.speed() << std::endl;
-		          swipe.direction().x > 0 ? hitKey(0x27) : hitKey(0x25);        		    		
-	    	}
-	    }
+  	std::cout << "frame";
+  	if(frame.hands().count() >= 1){
+  		if(frame.hands()[0].fingers().count() > 0){
+  			std::cout << frame.hands()[0].fingers()[0].tipPosition()[1] << "\n";
+  			if(frame.hands()[0].fingers()[0].tipPosition()[1] > 200){
+	  			scrollUp();
+  			}else if(frame.hands()[0].fingers()[0].tipPosition()[1] < 70){
+  				scrollDown();
+  			}
+  		}
   	}
   }
 };
