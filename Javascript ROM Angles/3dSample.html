@@ -139,6 +139,7 @@
 
           var angle = Math.atan2(y,x);
           if(angle > 0){
+                        angle = 180 - angle*(180/Math.PI)      
           }else{
             angle = 180 + angle*(180/Math.PI)      
           }
@@ -147,7 +148,7 @@
           c.strokeStyle = "#FFA040";
           c.lineWidth = 5;
 
-          c.arc(width/2, height/2, 20, 0, Math.atan2(x,y));
+          c.arc(width/2, height/2, 20, 0, Math.atan2(x,y)*-1,1);
           c.stroke();
 
           c.fillText(angle,width/2+30,height/2+30);
