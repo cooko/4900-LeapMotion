@@ -13,3 +13,24 @@ some issues:
 		Some sort of inverse kinimatics might be required to solve this7
 
 	full skeleton recognition is planned for future updates
+
+
+	        - 15-20 minutes
+        - include the problem you were investigating
+
+			Active range-of-motion calculation using the leap motion controller
+
+        - include what you want to do with this (medical apps, and what’s been done already - be brief though)
+        - include the things you had to learn - be specific and technical about this
+        	Languages
+        		Javascript
+        		C++
+        		Windows Programming
+        		Leap Motion API
+        		Range of motion
+        - include some examples of things you’ve developed (perhaps pong via Leap?)
+        - end with what you think you can do with the device in the future
+        
+        - the problem description and the medical app stuff should take 5-10 minutes. 
+        - the things you learned (give examples) should be about 10 minutes
+        - then save 5 minutes for wowing us with whatever you’ve developed
