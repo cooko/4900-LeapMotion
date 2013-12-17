@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+/------------------------------------------------------------------------------\
+| Copyright (C) 2012-2013 Leap Motion, Inc. All rights reserved.               |
+| Leap Motion proprietary and confidential. Not for distribution.              |
+| Use subject to the terms of the Leap Motion SDK Agreement available at       |
+| https://developer.leapmotion.com/sdk_agreement, or another agreement         |
+| between Leap Motion and you, your company or other organization.             |
+\------------------------------------------------------------------------------/
+-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Leap Motion Hand Tracking</title>
+<script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+<script>
+var controllerOptions = {enableGestures: true};
+
+var hand0 = "Hands-0.png";
+var hand1 = "Hands-1.png";
+var hand2 = "Hands-2.png";
+var hand3 = "Hands-3.png";
+var hand4 = "Hands-4.png";
+var hand5 = "Hands-5.png";
+
+var img = document.getElementById("hand")
+var previousFrame = null;
+
+Leap.loop(controllerOptions, function(frame) {
+  if(previousFrame != null){
+      if(previousFrame.fingers.length == frame.fingers.length){
+        switch(frame.fingers.length){
+          case 0:
+            changeImage(hand0);
+            break;
+          case 1:
+            changeImage(hand1);
+            break;
+          case 2:
+            changeImage(hand2);
+            break;
+          case 3:
+            changeImage(hand3);
+            break;
+          case 4:
+            changeImage(hand4);
+            break;
+          case 5:
+            changeImage(hand5);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  previousFrame = frame;
+})
+
+function changeImage(a) {
+  document.getElementById("hand").src=a;
+}
+
+</script>
+</head>
+<body>
+<h1>Leap Motion Hand Tracking</h1>
+<div id="main">
+  <img id="hand" src="Hands-0.png">
+</div>
+</body>
+</html>
